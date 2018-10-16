@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/muhammadhoti/iFriendYou/precache-manifest.cbdc1975986e9f1c62ba96c01e5b2dec.js"
+  "/iFriendYou/precache-manifest.e70a98b95720d61abd3200d3bbe48834.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/muhammadhoti/iFriendYou/index.html", {
+workbox.routing.registerNavigationRoute("/iFriendYou/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
