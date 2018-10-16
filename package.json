@@ -2,7 +2,7 @@
   "name": "i-friend-you",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://muhammadhoti.github.io/muhammadhoti/iFriendYou",
+  "homepage": "https://muhammadhoti.github.io/iFriendYou",
   "dependencies": {
     "antd": "^3.10.1",
     "antd-init": "^2.0.6",
