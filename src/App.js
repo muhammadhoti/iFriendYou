@@ -33,7 +33,7 @@ class App extends Component {
 
     return (
       <div>
-        <Layout style={{backgroundColor:"rgb(52, 41, 41)"}}>
+        <Layout style={{backgroundColor:"#500000"}}>
           <Row> 
             <Col span={24}>
             <h1 className="Heading">I Friend You !</h1>
@@ -64,8 +64,8 @@ class App extends Component {
           <Row>
             <Col span={24}>
               <hr></hr>              
-              <Footer style={{backgroundColor:"rgb(52, 41, 41)",margin:"-5px"}}>
-                <address style={{color:'white',fontFamily:'Times New Roman',textAlign:'center'}}>
+              <Footer style={{backgroundColor:"#500000",margin:"-5px"}}>
+                <address style={{color:'antiquewhite',fontFamily:'Times New Roman',textAlign:'center'}}>
                           Website By : HayFa Tech<sup>©</sup><br></br>
                           Cell No.      : 0332-0355566<br></br>
                           Facebook      : <a href="http://www.facebook.com/M.H0ti"target="_blank">Find Us On Facebook</a><br></br>

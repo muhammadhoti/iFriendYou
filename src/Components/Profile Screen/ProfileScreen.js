@@ -3,6 +3,10 @@ import './ProfileScreen.css';
 import swal from 'sweetalert';
 import { Input } from "antd";
 import firebase from '../../Config/Config'
+import { Checkbox } from "antd";
+import coffee from "../../Assets/Images/Profile Screen/Coffee.png"
+import juice from "../../Assets/Images/Profile Screen/Juice.png"
+import cocktail from "../../Assets/Images/Profile Screen/Cocktail.png"
 
 class ProfileScreen extends Component {
 
@@ -11,8 +15,11 @@ class ProfileScreen extends Component {
     this.state={
         showInputBox : true,
         showPictureBox : false,
+        showBeverages : false,
         showMap : false,
         imgUrls : [],
+        beverages: [],
+        meetingDuration : [],
     }
     this.inputBox=this.inputBox.bind(this)
     this.uploadPictures=this.uploadPictures.bind(this)
@@ -80,7 +87,7 @@ class ProfileScreen extends Component {
         imgUrls.push(url3)
         this.setState(imgUrls)
       }).then(()=>{
-        this.setState({showPictureBox : false,showMap : true})
+        this.setState({showPictureBox : false,showBeverages : true})
       })
     }else{
       swal("Acess Denied","Please Upload All Three Pictures");
@@ -90,24 +97,52 @@ class ProfileScreen extends Component {
   
   //Picture Box
 
+  //Beverages
+
+  onChange(e){
+    const {beverages} =this.state;
+    !beverages.includes(e.target.value) ? beverages.push(e.target.value):
+    beverages.splice(beverages.indexOf(e.target.value),1)
+    this.setState(beverages)
+  }
+
+  //Beverages
+
+  //Meeting Duration
   
+  Change(e){
+    const {meetingDuration} =this.state;
+    !meetingDuration.includes(e.target.value) ? meetingDuration.push(e.target.value):
+    meetingDuration.splice(meetingDuration.indexOf(e.target.value),1)
+    this.setState(meetingDuration)
+  }
+
+  gotoMap(){
+    const {beverages,meetingDuration} = this.state
+    beverages.length === 0 || meetingDuration.length === 0 ? swal("Access Denied","Atleast Choose Any One From Both Fields"):
+    this.setState({
+      showMap : true,
+      showBeverages : false
+    })
+  }
+  //Meeting Duration
 
   render() {
 
-    const {showInputBox,showPictureBox,showMap} = this.state
+    const {showInputBox,showPictureBox,showBeverages,showMap} = this.state
 
     return (
       <div>
-        {showInputBox && !showPictureBox && !showMap &&
+        {showInputBox && !showPictureBox && !showBeverages && !showMap &&
         <div className="example-input">
         <Input id="nickname" size="large" placeholder="Enter Your Nickname" />
         <br></br>
-        <Input id="number" size="large" placeholder="Enter Your Phone Number" />
+        <Input id="number" type="number" size="large" placeholder="Enter Your Phone Number" />
         <br></br>
         <a style={{color:'black'}} onClick={this.inputBox} className="myButton">Next</a>
         </div>
         }
-        {showPictureBox && !showInputBox && !showMap &&
+        {showPictureBox && !showInputBox && !showBeverages && !showMap &&
         <div>
           <h1 className="pb-heading">Upload Your 3 Dashing Pictures!</h1>
           <input type="file" name="pic1" id="pic1" onChange={(e)=>{this.setState({file1 : e.target.files[0]})}}/>
@@ -120,8 +155,28 @@ class ProfileScreen extends Component {
           
         </div>
         }
-        {showMap && !showInputBox && !showPictureBox &&
-          <div>{this.state.imgUrls}</div>
+        {showBeverages && !showInputBox && !showPictureBox && !showMap &&
+          <div>
+            <h1 className="pb-heading">Select Meeting Duration</h1>
+            <Checkbox style={{color:"antiquewhite"}} value="120 Minutes" onChange={(e)=>{this.Change(e)}}>120 Minutes</Checkbox>
+            <Checkbox style={{color:"antiquewhite"}} value="60 Minutes" onChange={(e)=>{this.Change(e)}}>60 Minutes</Checkbox>
+            <Checkbox style={{color:"antiquewhite"}} value="30 Minutes" onChange={(e)=>{this.Change(e)}}>30 Minutes</Checkbox>
+            <br></br>
+            <h1 className="pb-heading">Select Beverages</h1>
+            <Checkbox style={{color:"antiquewhite"}} value="Coffee" onChange={(e)=>{this.onChange(e)}}>Coffee</Checkbox>
+            <img src={coffee} className="bev-ca" />
+            <Checkbox style={{color:"antiquewhite"}} value="Juice" onChange={(e)=>{this.onChange(e)}}>Juice</Checkbox>
+            <img src={juice} className="bev-ca" />
+            <Checkbox style={{color:"antiquewhite"}} value="Cocktail" onChange={(e)=>{this.onChange(e)}}>Cocktail</Checkbox>
+            <img src={cocktail} className="bev-ca" />
+            <br></br>
+            <a style={{color:'black'}} onClick={()=>{this.gotoMap()}} className="myButton">Next</a>
+          </div>
+        }
+        {showMap && !showBeverages && !showInputBox && !showPictureBox &&
+          <div>
+            <button onClick={()=>{console.log(this.state)}}>check</button>
+          </div>
         }
       </div>
     );
