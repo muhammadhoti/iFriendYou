@@ -10,30 +10,55 @@ class Homepage extends Component {
   constructor(props){
     super(props)
     this.state={
-
+      usersList : []
     }
     this.login=this.login.bind(this)
     this.sendData=this.sendData.bind(this)
   }
 
-  sendData(fbInfo,uid){
+  sendData(email,displayName,displayPicture,uid){
     const database = firebase.database();
-    const newUserRef = database.ref(`users/${uid}`).push();
+    const newUserRef = database.ref(`users/${uid}/facebookInfo`).push();
     newUserRef.set(
        {
-        fbInfo
+        email,
+        displayName,
+        displayPicture
+       }
+     )
+     const userListRef = database.ref(`usersList`).push();
+     userListRef.set(
+       {
+         uid
        }
      )
     
   }
 
+  componentDidMount(){
+    fetch(`https://i-friend-you.firebaseio.com/usersList.json`)
+    .then(data => {
+        return data.json();
+    })
+    .then(data2 => {
+        // console.log(data2);
+        for(let i in data2){
+          this.state.usersList.push(data2[i].uid);
+        }
+    })
+  }
+
   componentDidUpdate(){
     
-    const {user,uid} = this.state;
+    const {email,displayName,displayPicture,uid,usersList} = this.state;
 
-    const {changeScreen} =this.props;
+    const {changeScreen,changeScreen2} =this.props;
     
-    {user && this.sendData(user,uid)}
+    usersList.includes(uid) ?
+
+    changeScreen2(uid) :
+
+    this.sendData(email,displayName,displayPicture,uid)
 
     changeScreen(uid)
 
@@ -49,11 +74,9 @@ class Homepage extends Component {
 
       this.setState({
         uid : user.uid,
-        user : {
-          displayName : user.displayName,
-          displayPicture : user.photoURL ,
-          email : user.email,
-        }
+        displayName : user.displayName,
+        displayPicture : user.photoURL ,
+        email : user.email,
       })       
       // ...
     }).catch(function(error) {

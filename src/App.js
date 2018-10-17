@@ -6,15 +6,20 @@ import { Row, Col } from 'antd';
 
 import ProfileScreen from './Components/Profile Screen/ProfileScreen'
 
+import Dashboard from './Components/Dashboard/Dashboard'
+
 class App extends Component {
 
   constructor(props){
     super(props)
     this.state={
       showHomepage : true,
-      showProfileScreen : false
+      showProfileScreen : false,
+      showDashboard : false,
     }
     this.goToProfileScreen=this.goToProfileScreen.bind(this)
+    this.goToDashboard=this.goToDashboard.bind(this)
+    this.directGoToDashboard=this.directGoToDashboard.bind(this)
   }
 
   goToProfileScreen(id){
@@ -25,15 +30,35 @@ class App extends Component {
     })
   }
 
+  goToDashboard(){
+    this.setState({
+      showHomepage : false,
+      showProfileScreen : false,
+      showDashboard : true
+    })
+  }
+
+  directGoToDashboard(id){
+    this.setState({
+      showHomepage : false,
+      showProfileScreen : false,
+      showDashboard : true,
+      uid : id 
+    })
+  }
+
   render() {
 
     const { Header, Footer, Content } = Layout;
     
-    const {showHomepage,showProfileScreen,uid} = this.state;
+    const bgColor = "#85144b"
+
+
+    const {showHomepage,showProfileScreen,uid,showDashboard} = this.state;
 
     return (
       <div>
-        <Layout style={{backgroundColor:"#500000"}}>
+        <Layout style={{backgroundColor:bgColor}}>
           <Row> 
             <Col span={24}>
             <h1 className="Heading">I Friend You !</h1>
@@ -45,17 +70,24 @@ class App extends Component {
           <Row>
             <hr></hr>         
             <Content>
-              {showHomepage && !showProfileScreen &&
+              {showHomepage && !showProfileScreen && !showDashboard &&
                 <Col span={24}>
                   <div className="Homepage">
-                    <Homepage changeScreen={this.goToProfileScreen}/>
+                    <Homepage changeScreen={this.goToProfileScreen} changeScreen2={this.directGoToDashboard}/>
                   </div>
                 </Col>
               }
-              {showProfileScreen && !showHomepage &&
+              {showProfileScreen && !showHomepage && !showDashboard &&
                 <Col span={24}>
                   <div className="ProfileScreen">
-                    <ProfileScreen uid={uid}/> 
+                    <ProfileScreen uid={uid} changeScreen={this.goToDashboard}/> 
+                  </div>
+                </Col>
+              }
+              {showDashboard && !showHomepage && !showProfileScreen && 
+                <Col span={24}>
+                  <div className="dashboard">
+                    <Dashboard uid={uid}/> 
                   </div>
                 </Col>
               }
@@ -64,10 +96,9 @@ class App extends Component {
           <Row>
             <Col span={24}>
               <hr></hr>              
-              <Footer style={{backgroundColor:"#500000",margin:"-5px"}}>
+              <Footer style={{backgroundColor:bgColor,margin:"-5px"}}>
                 <address style={{color:'antiquewhite',fontFamily:'Times New Roman',textAlign:'center'}}>
-                          Website By : HayFa Tech<sup>©</sup><br></br>
-                          Cell No.      : 0332-0355566<br></br>
+                          HayFa Tech<sup>©</sup><br></br>
                           Facebook      : <a href="http://www.facebook.com/M.H0ti"target="_blank">Find Us On Facebook</a><br></br>
                           Twitter       : <a href="https://twitter.com/muhammadhoti"target="_blank">Find Us On Twitter</a><br></br>
                           Github       : <a href="https://github.com/muhammadhoti"target="_blank">Find Us On Github</a><br></br>
