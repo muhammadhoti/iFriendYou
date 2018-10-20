@@ -1,7 +1,7 @@
 {
   "main.css": "/iFriendYou/static/css/main.4a21880e.chunk.css",
-  "main.js": "/iFriendYou/static/js/main.5b1877e5.chunk.js",
-  "main.js.map": "/iFriendYou/static/js/main.5b1877e5.chunk.js.map",
+  "main.js": "/iFriendYou/static/js/main.22438156.chunk.js",
+  "main.js.map": "/iFriendYou/static/js/main.22438156.chunk.js.map",
   "static/css/1.1cec5427.chunk.css": "/iFriendYou/static/css/1.1cec5427.chunk.css",
   "static/js/1.517cfd06.chunk.js": "/iFriendYou/static/js/1.517cfd06.chunk.js",
   "static/js/1.517cfd06.chunk.js.map": "/iFriendYou/static/js/1.517cfd06.chunk.js.map",
@@ -15,6 +15,6 @@
   "static/css/main.4a21880e.chunk.css.map": "/iFriendYou/static/css/main.4a21880e.chunk.css.map",
   "static/css/1.1cec5427.chunk.css.map": "/iFriendYou/static/css/1.1cec5427.chunk.css.map",
   "index.html": "/iFriendYou/index.html",
-  "precache-manifest.4dcac62366e14303e045033c4b595ea5.js": "/iFriendYou/precache-manifest.4dcac62366e14303e045033c4b595ea5.js",
+  "precache-manifest.9f966db4a5b65cdd4710f12e44ea6576.js": "/iFriendYou/precache-manifest.9f966db4a5b65cdd4710f12e44ea6576.js",
   "service-worker.js": "/iFriendYou/service-worker.js"
 }
