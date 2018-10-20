@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   goToDashboard(id){
-    console.log(id)
+    // console.log(id)
     this.setState({
       showHomepage : false,
       showProfileScreen : false,

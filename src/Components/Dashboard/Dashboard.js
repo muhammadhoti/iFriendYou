@@ -17,14 +17,14 @@ class Dashboard extends Component {
         return data.json();
     })
     .then(data2 => {
-        console.log(data2);
+        // console.log(data2);
     })
-    console.log(this.props.uid);
+    // console.log(this.props.uid);
 
   }
 
   render() {
-    console.log("Dashboard Chala")
+    // console.log("Dashboard Chala")
     return (
       <div>
         <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/>
