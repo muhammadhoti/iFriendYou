@@ -26,12 +26,7 @@ class Homepage extends Component {
         displayPicture
        }
      )
-     const userListRef = database.ref(`usersList`).push();
-     userListRef.set(
-       {
-         uid
-       }
-     )
+     
     
   }
 
@@ -53,14 +48,12 @@ class Homepage extends Component {
     const {email,displayName,displayPicture,uid,usersList} = this.state;
 
     const {changeScreen,changeScreen2} =this.props;
-    
-    usersList.includes(uid) ?
-
-    changeScreen2(uid) :
-
+    if(usersList.includes(uid)){
+    changeScreen2(uid)
+  }else{
     this.sendData(email,displayName,displayPicture,uid)
-
     changeScreen(uid)
+  }
 
   }
 
@@ -83,6 +76,7 @@ class Homepage extends Component {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
+      console.log(errorCode,errorMessage);
       // The email of the user's account used.
       var email = error.email;
       // The firebase.auth.AuthCredential type that was used.

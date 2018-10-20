@@ -19,7 +19,6 @@ class App extends Component {
     }
     this.goToProfileScreen=this.goToProfileScreen.bind(this)
     this.goToDashboard=this.goToDashboard.bind(this)
-    this.directGoToDashboard=this.directGoToDashboard.bind(this)
   }
 
   goToProfileScreen(id){
@@ -30,20 +29,13 @@ class App extends Component {
     })
   }
 
-  goToDashboard(){
-    this.setState({
-      showHomepage : false,
-      showProfileScreen : false,
-      showDashboard : true
-    })
-  }
-
-  directGoToDashboard(id){
+  goToDashboard(id){
+    console.log(id)
     this.setState({
       showHomepage : false,
       showProfileScreen : false,
       showDashboard : true,
-      uid : id 
+      uid:id,
     })
   }
 
@@ -52,7 +44,6 @@ class App extends Component {
     const { Header, Footer, Content } = Layout;
     
     const bgColor = "#85144b"
-
 
     const {showHomepage,showProfileScreen,uid,showDashboard} = this.state;
 
@@ -70,10 +61,11 @@ class App extends Component {
           <Row>
             <hr></hr>         
             <Content>
+              <div className="heightSetting">
               {showHomepage && !showProfileScreen && !showDashboard &&
                 <Col span={24}>
                   <div className="Homepage">
-                    <Homepage changeScreen={this.goToProfileScreen} changeScreen2={this.directGoToDashboard}/>
+                    <Homepage changeScreen={this.goToProfileScreen} changeScreen2={this.goToDashboard} />
                   </div>
                 </Col>
               }
@@ -91,6 +83,7 @@ class App extends Component {
                   </div>
                 </Col>
               }
+              </div>
             </Content>
           </Row>
           <Row>

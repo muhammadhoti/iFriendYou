@@ -144,12 +144,13 @@ class ProfileScreen extends Component {
 
   setPosition(){
     navigator.geolocation.getCurrentPosition((position)=>{
-      this.setState({coords : position.coords})
+      this.setState({latitude : position.coords.latitude,longitude : position.coords.longitude})
       })
   }
 
   updateCenter(lat,lng){
     this.setState({latitude :lat,longitude:lng});
+    
   }
 
   //Maps
@@ -159,10 +160,11 @@ class ProfileScreen extends Component {
   submit(){
     const {changeScreen} = this.props;
     const database = firebase.database();
-    const {beverages,latitude,longitude,imgUrls,meetingDuration,nickname,number,uid} = this.state
+    const {beverages,latitude,longitude,imgUrls,meetingDuration,nickname,number,uid,coords} = this.state
     const newUserRef = database.ref(`users/${uid}/profileScreenInfo`).push();
     newUserRef.set(
-       {
+      latitude && longitude ? 
+      {
         beverages,
         imgUrls,
         latitude,
@@ -171,9 +173,26 @@ class ProfileScreen extends Component {
         nickname,
         number
        }
+       :
+       {
+        beverages,
+        imgUrls,
+        latitude:coords.latitude,
+        longitude:coords.longitude, 
+        meetingDuration,
+        nickname,
+        number
+       }
+     )
+
+     const userListRef = database.ref(`usersList`).push();
+     userListRef.set(
+       {
+         uid
+       }
      )
     
-    changeScreen()
+    changeScreen(uid)
   }
 
   //Sending Data and Going To DashBoard
@@ -185,7 +204,7 @@ class ProfileScreen extends Component {
     return (
       <div>
         {showInputBox && !showPictureBox && !showBeverages && !showMap &&
-        <div className="example-input">
+        <div className="example-input marginSetting">
         <Input id="nickname" size="large" placeholder="Enter Your Nickname" />
         <br></br>
         <Input id="number" type="number" size="large" placeholder="Enter Your Phone Number" />
@@ -194,8 +213,9 @@ class ProfileScreen extends Component {
         </div>
         }
         {showPictureBox && !showInputBox && !showBeverages && !showMap &&
-        <div>
+        <div className="marginSetting">
           <h1 className="pb-heading">Upload Your 3 Good Looking Pictures!</h1>
+          <br></br>
           <input type="file" name="pic1" id="pic1" onChange={(e)=>{this.setState({file1 : e.target.files[0]})}}/>
           <br></br>
           <input type="file" name="pic2" id="pic2" onChange={(e)=>{this.setState({file2 : e.target.files[0]})}}/>
@@ -204,11 +224,10 @@ class ProfileScreen extends Component {
           <br></br>
           <a id="uploading" style={{color:'black'}} onClick={this.uploadPictures} className="myButton">Next</a>
           <p id="uploading2" style={{display:"none",color:"antiquewhite"}}>Wait ... Soon You Will Be Redirected To Next Screen</p>
-          
         </div>
         }
         {showBeverages && !showInputBox && !showPictureBox && !showMap &&
-          <div>
+          <div className="marginSetting">
             <h1 className="pb-heading">Select Meeting Duration</h1>
             <Checkbox style={{color:"antiquewhite"}} value="120 Minutes" onChange={(e)=>{this.Change(e)}}>120 Minutes</Checkbox>
             <Checkbox style={{color:"antiquewhite"}} value="60 Minutes" onChange={(e)=>{this.Change(e)}}>60 Minutes</Checkbox>
@@ -230,12 +249,13 @@ class ProfileScreen extends Component {
             <h1 className="pb-heading">Select Your Location</h1>
             <small style={{color:"white"}}>Drag And Drop Marker To Select Your Location And Then Hit Submit Button</small>
             <MyMapComponent
-              isMarkerShown
+              isMarkerShown = {true}
               googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `100vh` }} />}
               mapElement={<div style={{ height: `100%` }} />}
-              coords={coords}
+              latitude = {this.state.latitude}
+              longitude = {this.state.longitude}
               updateCenter={this.updateCenter}
             />
             <br></br>
@@ -252,11 +272,11 @@ export default ProfileScreen;
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={14}
-    center={{ lat: props.coords.latitude, lng: props.coords.longitude }}
+    center={{ lat: props.latitude, lng: props.longitude }}
   >
     {props.isMarkerShown && 
     <Marker 
-      position={{ lat: props.coords.latitude, lng: props.coords.longitude }} 
+      position={{ lat: props.latitude, lng: props.longitude }} 
       draggable={true}
       onDragEnd={position => {
           props.updateCenter(position.latLng.lat(),position.latLng.lng())

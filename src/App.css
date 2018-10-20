@@ -16,3 +16,6 @@
 .dashboard{
     text-align: center;
 }
+.heightSetting{
+    min-height: 400px;
+}
