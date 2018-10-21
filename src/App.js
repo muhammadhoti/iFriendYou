@@ -4,6 +4,7 @@ import Homepage from './Components/Homepage/Homepage'
 import { Layout } from 'antd';
 import { Row, Col } from 'antd';
 
+
 import ProfileScreen from './Components/Profile Screen/ProfileScreen'
 
 import Dashboard from './Components/Dashboard/Dashboard'
@@ -21,9 +22,12 @@ class App extends Component {
     this.goToDashboard=this.goToDashboard.bind(this)
   }
 
-  goToProfileScreen(id){
+  goToProfileScreen(id,displayName,displayPicture,email){
     this.setState({
       uid : id,
+      displayName : displayName,
+      displayPicture : displayPicture ,
+      email : email,
       showHomepage : false,
       showProfileScreen : true
     })
@@ -45,7 +49,7 @@ class App extends Component {
     
     const bgColor = "#85144b"
 
-    const {showHomepage,showProfileScreen,uid,showDashboard} = this.state;
+    const {showHomepage,showProfileScreen,uid,displayName,displayPicture,email,showDashboard} = this.state;
 
     return (
       <div>
@@ -72,7 +76,7 @@ class App extends Component {
               {showProfileScreen && !showHomepage && !showDashboard &&
                 <Col span={24}>
                   <div className="ProfileScreen">
-                    <ProfileScreen uid={uid} changeScreen={this.goToDashboard}/> 
+                    <ProfileScreen uid={uid} email={email} displayName={displayName} displayPicture={displayPicture} changeScreen={this.goToDashboard}/> 
                   </div>
                 </Col>
               }

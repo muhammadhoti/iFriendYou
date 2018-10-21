@@ -17,6 +17,9 @@ class ProfileScreen extends Component {
     super(props)
     this.state={
         uid : props.uid,
+        email : props.email,
+        displayName : props.displayName,
+        displayPicture : props.displayPicture,
         showInputBox : true,
         showPictureBox : false,
         showBeverages : false,
@@ -160,11 +163,14 @@ class ProfileScreen extends Component {
   submit(){
     const {changeScreen} = this.props;
     const database = firebase.database();
-    const {beverages,latitude,longitude,imgUrls,meetingDuration,nickname,number,uid,coords} = this.state
-    const newUserRef = database.ref(`users/${uid}/profileScreenInfo`).push();
+    const {displayPicture,displayName,email,beverages,latitude,longitude,imgUrls,meetingDuration,nickname,number,uid,coords} = this.state
+    const newUserRef = database.ref(`users/${uid}/userInfo`).push();
     newUserRef.set(
       latitude && longitude ? 
       {
+        displayName,
+        displayPicture,
+        email,
         beverages,
         imgUrls,
         latitude,

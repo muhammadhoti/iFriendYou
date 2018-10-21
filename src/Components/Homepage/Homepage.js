@@ -13,22 +13,21 @@ class Homepage extends Component {
       usersList : []
     }
     this.login=this.login.bind(this)
-    this.sendData=this.sendData.bind(this)
   }
 
-  sendData(email,displayName,displayPicture,uid){
-    const database = firebase.database();
-    const newUserRef = database.ref(`users/${uid}/facebookInfo`).push();
-    newUserRef.set(
-       {
-        email,
-        displayName,
-        displayPicture
-       }
-     )
+  // sendData(email,displayName,displayPicture,uid){
+  //   const database = firebase.database();
+  //   const newUserRef = database.ref(`users/${uid}/facebookInfo`).push();
+  //   newUserRef.set(
+  //      {
+  //       email,
+  //       displayName,
+  //       displayPicture
+  //      }
+  //    )
      
     
-  }
+  // }
 
   componentDidMount(){
     fetch(`https://i-friend-you.firebaseio.com/usersList.json`)
@@ -51,8 +50,8 @@ class Homepage extends Component {
     if(usersList.includes(uid)){
     changeScreen2(uid)
   }else{
-    this.sendData(email,displayName,displayPicture,uid)
-    changeScreen(uid)
+    // this.sendData(email,displayName,displayPicture,uid)
+    changeScreen(uid,displayName,displayPicture,email)
   }
 
   }
