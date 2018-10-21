@@ -98,6 +98,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log(this.state.selectedUsers)
     const {meetingButton,card} = this.state;
     const data = ['Alexandre', 'Thomas', 'Lucien']
 
@@ -105,9 +106,9 @@ class Dashboard extends Component {
       <div>
         {meetingButton &&
         <div>
-        {/* <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/> */}
-        <div><h1 style={{color:"antiquewhite",margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
-        <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
+        <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/>
+        {/* <div><h1 style={{color:"antiquewhite",margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
+        <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a> */}
         </div>
         }
         {card && !meetingButton &&
