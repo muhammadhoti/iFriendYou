@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Dashboard.css';
 import CarouselSlider from "react-carousel-slider"
 import Cards, { Card } from 'react-swipe-deck'
+import swal from 'sweetalert';
 
 class Dashboard extends Component {
 
@@ -11,6 +12,7 @@ class Dashboard extends Component {
         uid : this.props.uid,
         meetingButton : true,
         card : false,
+        meetingPoint : false,
         currentUser : {},
         otherUsers : [],
         selectedUsers : [],
@@ -92,8 +94,7 @@ class Dashboard extends Component {
     
   }
 
-  action(message){
-    console.log(message)
+  dismiss(){
     // const {selectedUsers} = this.state;
     // console.log(selectedUsers)
     // selectedUsers.map((value)=>{
@@ -105,33 +106,69 @@ class Dashboard extends Component {
     // })
   }
 
+  action(index){
+    const {selectedUsers} = this.state;
+    swal({
+      title: "Are you sure?",
+      text: `You Want To Meet ${selectedUsers[index].displayName}`,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        this.setState({meetingWith:selectedUsers[index]})
+        this.setState({meetingPoint : true,card:false})
+      }
+    });
+  }
+
   render() {
     
-    const {meetingButton,card,selectedUsers} = this.state;
-    const data = ['Alexandre', 'Thomas', 'Lucien']
-
+    const {meetingButton,card,selectedUsers,meetingPoint} = this.state;
     return (
+      
       <div>
-        {meetingButton &&
+        {meetingButton && !card && !meetingPoint &&
         <div>
-        {/* <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/> */}
+        
         <div><h1 style={{color:"antiquewhite",margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
         <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
         </div>
         }
-        {card && !meetingButton &&
-        <div>
-          <Cards className='master-root'>
-            {data.map(item =>
+        {card && !meetingButton && !meetingPoint &&
+        <div >
+        <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Here Are All Those Who Have Similarites With You</h1>
+        <p style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Swipe Right To Set meeting And Left To Dismiss !</p>  
+          <Cards >
+            {selectedUsers.map((value,index) =>
+            
               <Card
-                onSwipeLeft={()=>{this.action('swipe left')}}
-                onSwipeRight={()=>{this.action('swipe right')}}
+                onSwipeLeft={()=>{this.dismiss('swipe left')}}
+                onSwipeRight={()=>{this.action(index)}}
+                
               >
-                <h2>{item}</h2>
+                <div  className="w3-container" style={{width:"100%"}}>
+                  <div className="w3-card-4 w3-dark-grey" style={{minHeight:250}} >
+                    <div className="w3-container w3-center">
+                      <h3 style={{fontSize:"20px"}}>{value.displayName}</h3>
+                      <img src={value.imgUrls[0]} alt="Avatar" width='75%' height="100%"/>
+                      {/* <div style={{minHeight:"100px"}}><CarouselSlider slideItems = {value.imgUrls} /></div> */}
+                      <h5>{value.nickname}</h5>
+                    </div>
+                  </div>
+                </div>
+                
               </Card>
             )}
           </Cards>
         </div>
+        }
+        {meetingPoint && !meetingButton && !card &&
+          <div>
+            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Point </h1>
+            <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/>
+          </div>
         }
       </div>
     );
