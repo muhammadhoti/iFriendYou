@@ -94,21 +94,29 @@ class Dashboard extends Component {
 
   action(message){
     console.log(message)
-    console.log(this.state.selectedUsers)
+    // const {selectedUsers} = this.state;
+    // console.log(selectedUsers)
+    // selectedUsers.map((value)=>{
+    //   console.log(value.displayName)
+    //   console.log(value.imgUrls[0])
+    //   console.log(value.imgUrls[1])
+    //   console.log(value.imgUrls[2])
+    //   console.log(value.nickname)      
+    // })
   }
 
   render() {
-    console.log(this.state.selectedUsers)
-    const {meetingButton,card} = this.state;
+    
+    const {meetingButton,card,selectedUsers} = this.state;
     const data = ['Alexandre', 'Thomas', 'Lucien']
 
     return (
       <div>
         {meetingButton &&
         <div>
-        <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/>
-        {/* <div><h1 style={{color:"antiquewhite",margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
-        <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a> */}
+        {/* <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/> */}
+        <div><h1 style={{color:"antiquewhite",margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
+        <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
         </div>
         }
         {card && !meetingButton &&

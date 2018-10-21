@@ -177,17 +177,22 @@ class ProfileScreen extends Component {
         longitude, 
         meetingDuration,
         nickname,
-        number
+        number,
+        uid
        }
        :
        {
+        displayName,
+        displayPicture,
+        email,
         beverages,
         imgUrls,
         latitude:coords.latitude,
         longitude:coords.longitude, 
         meetingDuration,
         nickname,
-        number
+        number,
+        uid
        }
      )
 
