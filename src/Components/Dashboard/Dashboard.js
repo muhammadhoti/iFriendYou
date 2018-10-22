@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import CarouselSlider from "react-carousel-slider"
 import Cards, { Card } from 'react-swipe-deck'
 import swal from 'sweetalert';
+import { Carousel } from 'antd';
+import { Radio } from 'antd';
+import { Calendar} from 'antd';
+import moment from 'moment';
+import { TimePicker } from 'antd';
+import firebase from '../../Config/Config'
+
+const RadioGroup = Radio.Group;
+const format = 'HH:mm';
+
 
 class Dashboard extends Component {
 
@@ -16,13 +25,15 @@ class Dashboard extends Component {
         currentUser : {},
         otherUsers : [],
         selectedUsers : [],
+        venues : [],
+        radioButtonValue: 0,
     }
   }
 
   componentDidMount(){
     
-    const {uid,currentUser,otherUsers,selectedUsers} = this.state;
-    
+    const {uid,currentUser,otherUsers,selectedUsers,venues} = this.state;
+
     //Setting Current User In State
       
       fetch(`https://i-friend-you.firebaseio.com/users/${uid}.json`)
@@ -43,9 +54,29 @@ class Dashboard extends Component {
           currentUser.longitude = abc[i].longitude
         }
         this.setState(currentUser)
+        
+        //Setting Current User In State
+
+        //Getting Venues
+
+      }).then(()=>{
+        
+        fetch(`https://api.foursquare.com/v2/venues/explore?client_id=TCEW2YEVYB3DZRKWOZMW2JMYUQNKB4HNUMGCNPUGLSAQZXUM&client_secret=4KCFM5Q5FCDHIVUDD3XSDXYRCJVQLFDROBAQDR5R334MKTPD&v=20180323&ll=${currentUser.latitude},${currentUser.longitude}`)
+        .then((data) => {
+            return data.json()
+        }).then((data2)=>{
+          data2.response.groups[0].items.map((value,index)=>{
+            
+            index < 3 && venues.push({
+              name : value.venue.name,
+              address : value.venue.location.address,
+            })
+          })
+          this.setState(venues)
+        })
       })
 
-    //Setting Current User In State
+      //Getting Venues
 
     //Setting Other Users In State
 
@@ -91,11 +122,13 @@ class Dashboard extends Component {
 
     //Setting Other Users In State
 
-    
   }
 
   dismiss(){
-    // const {selectedUsers} = this.state;
+    
+    const {selectedVenues} = this.state;
+    console.log(selectedVenues)
+    
     // console.log(selectedUsers)
     // selectedUsers.map((value)=>{
     //   console.log(value.displayName)
@@ -117,15 +150,74 @@ class Dashboard extends Component {
     })
     .then((willDelete) => {
       if (willDelete) {
-        this.setState({meetingWith:selectedUsers[index]})
+        this.setState({meetingDetails: {meetingWith : selectedUsers[index]}})
         this.setState({meetingPoint : true,card:false})
       }
     });
   }
 
+  radioButtonValue(e){
+    
+    this.setState({
+      radioButtonValue: e.target.value,
+    });
+  }
+
+  selectVenue(e,index){
+    const {meetingDetails,venues} = this.state;
+    meetingDetails.meetingVenue = venues[index];
+    this.setState(meetingDetails)
+  }
+
+  getTime(e){
+    
+    const time = e._d.toString().slice(16,24);
+    const {meetingDetails} = this.state
+    meetingDetails.meetingTime = time;
+    this.setState(meetingDetails)
+    
+  }
+
+  getDate(e) {
+    const date = e._d.toString().slice(4,15)
+    const {meetingDetails} = this.state
+    meetingDetails.meetingDate = date;
+    this.setState(meetingDetails)
+  }
+
+  sendMeetingRequest(){
+    
+    const {meetingDetails,radioButtonValue,uid} = this.state
+    const database = firebase.database();
+    const meetings = database.ref(`meetings/${uid}`).push();
+
+    if(radioButtonValue !== 0 && meetingDetails.meetingDate && meetingDetails.meetingTime){
+    
+    meetings.set(
+       {
+         meetingDetails
+       }
+     )
+       
+       this.setState({meetingButton:true,card:false,meetingPoint:false})
+
+      }else{
+    
+        swal("Access Denied","Please Select The Required Details");
+    
+      }
+  }
+
   render() {
     
-    const {meetingButton,card,selectedUsers,meetingPoint} = this.state;
+    const {meetingButton,card,selectedUsers,meetingPoint,venues,meetingDetails,calendarValue,selectedValue} = this.state;
+    
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
+
     return (
       
       <div>
@@ -149,12 +241,18 @@ class Dashboard extends Component {
                 
               >
                 <div  className="w3-container" style={{width:"100%"}}>
-                  <div className="w3-card-4 w3-dark-grey" style={{minHeight:250}} >
+                  <div className="w3-card-4 " style={{minHeight:250,backgroundColor:"#84596B"}} >
                     <div className="w3-container w3-center">
                       <h3 style={{fontSize:"20px"}}>{value.displayName}</h3>
-                      <img src={value.imgUrls[0]} alt="Avatar" width='75%' height="100%"/>
+                      <div>
+                      <Carousel autoplay>
+                      <div ><img style={{height:"110px",width: "140px"}} src={value.imgUrls[0]}/></div>
+                      <div ><img style={{height:"110px",width: "140px"}} src={value.imgUrls[1]}/></div>
+                      <div ><img style={{height:"110px",width: "140px"}} src={value.imgUrls[2]}/></div>
+                      </Carousel>
+                      </div>
                       {/* <div style={{minHeight:"100px"}}><CarouselSlider slideItems = {value.imgUrls} /></div> */}
-                      <h5>{value.nickname}</h5>
+                      <p><b>Nickname : {value.nickname}</b></p>
                     </div>
                   </div>
                 </div>
@@ -166,8 +264,23 @@ class Dashboard extends Component {
         }
         {meetingPoint && !meetingButton && !card &&
           <div>
-            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Point </h1>
-            <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/>
+            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Venue </h1>
+            <RadioGroup onChange={(e)=>{this.radioButtonValue(e)}} value={this.state.radioButtonValue}>
+              {venues.map((value,index)=>{
+                return(
+                  <Radio onClick={(e)=>{this.selectVenue(e,index)}} style={radioStyle} value={index+1}>{value.name},{value.address}</Radio>
+                )
+              })}
+            </RadioGroup>
+            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Time </h1>
+            <TimePicker onChange={(e)=>{this.getTime(e)}} defaultValue={moment('10:30', format)} format={format} />
+            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Date </h1>
+            <div style={{ width: 1000, border: '1px solid #d9d9d9', borderRadius: 4,color:"antiquewhite"}}>
+              <Calendar fullscreen={false} onChange={(e)=>{this.getDate(e)}} onPanelChange={(e)=>{this.onPanelChange(e)}} />
+            </div>
+            <br></br>
+            <a href="#" style={{color:"black"}} onClick={()=>{this.sendMeetingRequest()}} className="myButton">Send Meeting Request To {meetingDetails.meetingWith.displayName}</a>
+            {/* <img width="750px" src="https://i.ytimg.com/vi/gSLIdT4EBlw/maxresdefault.jpg"/> */}
           </div>
         }
       </div>

@@ -42,3 +42,19 @@
 } */
 
 /* Button */
+
+.ant-carousel .slick-slide {
+	text-align: center;
+	min-height: 50px;
+	width: 135px;
+	line-height: 100px;
+	background: #84596B;
+	overflow: hidden;
+  }
+  .slick-dots{
+	  bottom: 215px;
+  }
+  .slick-slider{
+	height: 150px;
+  }
+  
