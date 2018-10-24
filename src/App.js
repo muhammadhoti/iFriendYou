@@ -22,6 +22,11 @@ class App extends Component {
     this.goToDashboard=this.goToDashboard.bind(this)
   }
 
+  componentDidMount(){
+    const uid = localStorage.getItem("uid");
+    uid && this.goToDashboard(uid)
+  }
+
   goToProfileScreen(id,displayName,displayPicture,email){
     this.setState({
       uid : id,

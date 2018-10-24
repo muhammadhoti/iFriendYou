@@ -204,6 +204,8 @@ class ProfileScreen extends Component {
      )
     
     changeScreen(uid)
+
+    localStorage.setItem("uid",uid)
   }
 
   //Sending Data and Going To DashBoard

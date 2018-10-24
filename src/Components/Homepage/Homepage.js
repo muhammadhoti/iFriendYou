@@ -49,8 +49,10 @@ class Homepage extends Component {
     const {changeScreen,changeScreen2} =this.props;
     if(usersList.includes(uid)){
     changeScreen2(uid)
+    localStorage.setItem("uid",uid)
   }else{
     // this.sendData(email,displayName,displayPicture,uid)
+    
     changeScreen(uid,displayName,displayPicture,email)
   }
 
