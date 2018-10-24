@@ -57,4 +57,12 @@
   .slick-slider{
 	height: 150px;
   }
-  
+  .ant-fullcalendar-value{
+	  color: antiquewhite !important;
+  }
+  .ant-fullcalendar-column-header-inner{
+	color: yellow !important;
+}
+.radio-btn-value{
+	color: antiquewhite !important;
+}

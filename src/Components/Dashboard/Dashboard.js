@@ -268,7 +268,7 @@ class Dashboard extends Component {
             <RadioGroup onChange={(e)=>{this.radioButtonValue(e)}} value={this.state.radioButtonValue}>
               {venues.map((value,index)=>{
                 return(
-                  <Radio onClick={(e)=>{this.selectVenue(e,index)}} style={radioStyle} value={index+1}>{value.name},{value.address}</Radio>
+                  <Radio onClick={(e)=>{this.selectVenue(e,index)}} style={radioStyle} value={index+1}><span className="radio-btn-value">{value.name},{value.address}</span></Radio>
                 )
               })}
             </RadioGroup>
