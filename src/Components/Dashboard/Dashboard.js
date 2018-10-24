@@ -264,7 +264,7 @@ class Dashboard extends Component {
         }
         {meetingPoint && !meetingButton && !card &&
           <div>
-            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Venue </h1>
+            <h1 style={{color:"yellowgreen",fontFamily:"Time New Roman"}}>Select Your Meeting Venue </h1>
             <RadioGroup onChange={(e)=>{this.radioButtonValue(e)}} value={this.state.radioButtonValue}>
               {venues.map((value,index)=>{
                 return(
@@ -272,9 +272,9 @@ class Dashboard extends Component {
                 )
               })}
             </RadioGroup>
-            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Time </h1>
+            <h1 style={{color:"yellowgreen",fontFamily:"Time New Roman"}}>Select Your Meeting Time </h1>
             <TimePicker onChange={(e)=>{this.getTime(e)}} defaultValue={moment('10:30', format)} format={format} />
-            <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Select Your Meeting Date </h1>
+            <h1 style={{color:"yellowgreen",fontFamily:"Time New Roman"}}>Select Your Meeting Date </h1>
             <div style={{ width: 1000, border: '1px solid #d9d9d9', borderRadius: 4,color:"antiquewhite"}}>
               <Calendar fullscreen={false} onChange={(e)=>{this.getDate(e)}} onPanelChange={(e)=>{this.onPanelChange(e)}} />
             </div>
