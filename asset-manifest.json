@@ -1,7 +1,7 @@
 {
   "main.css": "/iFriendYou/static/css/main.da85d1f7.chunk.css",
-  "main.js": "/iFriendYou/static/js/main.6a31b934.chunk.js",
-  "main.js.map": "/iFriendYou/static/js/main.6a31b934.chunk.js.map",
+  "main.js": "/iFriendYou/static/js/main.fcbbfa09.chunk.js",
+  "main.js.map": "/iFriendYou/static/js/main.fcbbfa09.chunk.js.map",
   "static/css/1.f6349a3b.chunk.css": "/iFriendYou/static/css/1.f6349a3b.chunk.css",
   "static/js/1.42024627.chunk.js": "/iFriendYou/static/js/1.42024627.chunk.js",
   "static/js/1.42024627.chunk.js.map": "/iFriendYou/static/js/1.42024627.chunk.js.map",
@@ -12,9 +12,9 @@
   "static/media/Juice.png": "/iFriendYou/static/media/Juice.ef24b71a.png",
   "static/media/Cocktail.png": "/iFriendYou/static/media/Cocktail.1b07e77a.png",
   "static/media/tagLine.png": "/iFriendYou/static/media/tagLine.3851b0ce.png",
-  "static/css/main.da85d1f7.chunk.css.map": "/iFriendYou/static/css/main.da85d1f7.chunk.css.map",
   "static/css/1.f6349a3b.chunk.css.map": "/iFriendYou/static/css/1.f6349a3b.chunk.css.map",
+  "static/css/main.da85d1f7.chunk.css.map": "/iFriendYou/static/css/main.da85d1f7.chunk.css.map",
   "index.html": "/iFriendYou/index.html",
-  "precache-manifest.1f86c99726bc68a3db83eb8b9450472e.js": "/iFriendYou/precache-manifest.1f86c99726bc68a3db83eb8b9450472e.js",
+  "precache-manifest.6b09c2b2adeac80fd04a723318f1ba0b.js": "/iFriendYou/precache-manifest.6b09c2b2adeac80fd04a723318f1ba0b.js",
   "service-worker.js": "/iFriendYou/service-worker.js"
 }
