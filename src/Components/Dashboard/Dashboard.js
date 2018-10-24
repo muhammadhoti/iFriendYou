@@ -224,7 +224,7 @@ class Dashboard extends Component {
         {meetingButton && !card && !meetingPoint &&
         <div>
         
-        <div><h1 style={{color:"antiquewhite",margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
+        <div><h1 style={{color:"antiquewhite",fontFamily:'Times New Roman',margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
         <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
         </div>
         }

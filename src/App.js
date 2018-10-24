@@ -99,7 +99,7 @@ class App extends Component {
             <Col span={24}>
               <hr></hr>              
               <Footer style={{backgroundColor:bgColor,margin:"-5px"}}>
-                <address style={{color:'antiquewhite',fontFamily:'Times New Roman',textAlign:'center'}}>
+                <address style={{color:'yellow',fontFamily:'Times New Roman',textAlign:'center'}}>
                           HayFa Tech<sup>©</sup><br></br>
                           Facebook      : <a href="http://www.facebook.com/M.H0ti"target="_blank">Find Us On Facebook</a><br></br>
                           Twitter       : <a href="https://twitter.com/muhammadhoti"target="_blank">Find Us On Twitter</a><br></br>
