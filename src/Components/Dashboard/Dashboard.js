@@ -112,7 +112,7 @@ class Dashboard extends Component {
         {selectedFlag = true}
       })
 
-      if(this.getDistance(currentUser.latitude,currentUser.longitude,value.userInfo[i].latitude,value.userInfo[i].longitude,) > 5000){
+      if(this.getDistance(currentUser.latitude,currentUser.longitude,value.userInfo[i].latitude,value.userInfo[i].longitude) < 4999){
         radiusFlag = true
       }
       
@@ -255,7 +255,7 @@ class Dashboard extends Component {
         }
         {card && !meetingButton && !meetingPoint &&
         <div >
-        <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Here Are All Those Who Have Similarites With You</h1>
+        <h1 style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>People Near You Around 5 KM Radius And Have Similarities With You</h1>
         <p style={{color:"antiquewhite",fontFamily:"Time New Roman"}}>Swipe Right To Set meeting And Left To Dismiss !</p>  
           <Cards >
             {selectedUsers.map((value,index) =>
