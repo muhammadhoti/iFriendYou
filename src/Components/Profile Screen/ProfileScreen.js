@@ -28,6 +28,8 @@ class ProfileScreen extends Component {
         beverages: [],
         meetingDuration : [],
         location : [],
+        latitude :`24.8607`,
+        longitude:`67.0011`,
     }
     this.inputBox=this.inputBox.bind(this)
     this.uploadPictures=this.uploadPictures.bind(this)

@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* global google */
+
 import React, { Component } from 'react';
 import './Dashboard.css';
 import Cards, { Card } from 'react-swipe-deck'
@@ -8,6 +11,8 @@ import { Calendar} from 'antd';
 import moment from 'moment';
 import { TimePicker } from 'antd';
 import firebase from '../../Config/Config'
+import { Modal, Button } from 'antd'
+import { withGoogleMap, GoogleMap, Marker, DirectionsRenderer, withScriptjs } from "react-google-maps"
 
 const RadioGroup = Radio.Group;
 const format = 'HH:mm';
@@ -27,9 +32,12 @@ class Dashboard extends Component {
         selectedUsers : [],
         venues : [],
         radioButtonValue: 0,
+        navigation : {},
+        visible: false,
     }
     this.radius = this.radius.bind(this)
     this.getDistance = this.getDistance.bind(this)
+    this.getDirections = this.getDirections.bind(this)
   }
 
   componentDidMount(){
@@ -72,6 +80,8 @@ class Dashboard extends Component {
             index < 3 && venues.push({
               name : value.venue.name,
               address : value.venue.location.address,
+              lat : value.venue.location.lat,
+              lng : value.venue.location.lng,
             })
           })
           this.setState(venues)
@@ -189,13 +199,51 @@ class Dashboard extends Component {
   }
 
   selectVenue(e,index){
-    const {meetingDetails,venues} = this.state;
+    const {meetingDetails,venues,navigation} = this.state;
     meetingDetails.meetingVenue = venues[index];
+    navigation.lat = venues[index].lat;
+    navigation.lng = venues[index].lng;
     this.setState(meetingDetails)
+    this.setState(navigation)
+  }
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+
+  handleOk = (e) => {
+    this.setState({
+      visible: false,
+    });
+  }
+
+  handleCancel = (e) => {
+    this.setState({
+      visible: false,
+    });
+  }
+
+  getDirections() {
+    const DirectionsService = new google.maps.DirectionsService();
+    const {currentUser,navigation} = this.state
+      DirectionsService.route({
+        origin: new google.maps.LatLng(currentUser.latitude, currentUser.longitude),
+        destination: new google.maps.LatLng(navigation.lat, navigation.lng),
+        travelMode: google.maps.TravelMode.DRIVING,
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result,
+          });
+        } else {
+          alert("Sorry! Can't calculate directions!")
+        }
+      });
   }
 
   getTime(e){
-    
     const time = e._d.toString().slice(16,24);
     const {meetingDetails} = this.state
     meetingDetails.meetingTime = time;
@@ -214,14 +262,15 @@ class Dashboard extends Component {
     
     const {meetingDetails,radioButtonValue,uid} = this.state
     const database = firebase.database();
-    const meetings = database.ref(`meetings/${uid}`).push();
+    const meetings = database.ref(`meetings/`).push();
 
     if(radioButtonValue !== 0 && meetingDetails.meetingDate && meetingDetails.meetingTime){
     
     meetings.set(
        {
-         meetingDetails
-       }
+        sender : uid,
+        receiver : meetingDetails.meetingWith.uid
+      }
      )
        
        this.setState({meetingButton:true,card:false,meetingPoint:false})
@@ -233,9 +282,10 @@ class Dashboard extends Component {
       }
   }
 
+
   render() {
     
-    const {meetingButton,card,selectedUsers,meetingPoint,venues,meetingDetails,calendarValue,selectedValue} = this.state;
+    const {meetingButton,card,selectedUsers,meetingPoint,venues,meetingDetails,calendarValue,selectedValue,currentUser,navigation,directions,radioButtonValue} = this.state;
     
     const radioStyle = {
       display: 'block',
@@ -297,6 +347,30 @@ class Dashboard extends Component {
                 )
               })}
             </RadioGroup>
+            <div>
+            {radioButtonValue !== 0 && <a href="#" style={{color:"black"}} onClick={this.showModal} className="myButton">See Venue On Map</a>}
+              <Modal
+                title="Map"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+              >
+                <MyMapComponent 
+                  isMarkerShown 
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhBEDUxDg83q1yrZ5r9eSrOtnrNDaVG0&v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `600px` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                  directions={directions}
+                  originLatitude={currentUser.latitude}
+                  originLongitude={currentUser.longitude}
+                  navigationLatitude={navigation.lat}
+                  navigationLongitude={navigation.lng}
+                />
+                <br></br>
+                <a href="#" style={{color:"black"}} onClick={this.getDirections} className="myButton">Get Directions</a>
+              </Modal>
+            </div>
             <h1 style={{color:"yellowgreen",fontFamily:"Time New Roman"}}>Select Your Meeting Time </h1>
             <TimePicker onChange={(e)=>{this.getTime(e)}} defaultValue={moment('10:30', format)} format={format} />
             <h1 style={{color:"yellowgreen",fontFamily:"Time New Roman"}}>Select Your Meeting Date </h1>
@@ -312,5 +386,19 @@ class Dashboard extends Component {
     );
   }
 }
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+  <GoogleMap
+    defaultZoom={14}
+    center={{ lat: props.originLatitude, lng: props.originLongitude }}
+  >
+
+  <Marker position={{ lat: props.originLatitude, lng: props.originLongitude }} />
+  <Marker position={{ lat: props.navigationLatitude, lng: props.navigationLongitude }} />
+
+  {props.directions && <DirectionsRenderer directions={props.directions} />}
+
+  </GoogleMap>
+))
 
 export default Dashboard;
