@@ -28,6 +28,8 @@ class Dashboard extends Component {
         venues : [],
         radioButtonValue: 0,
     }
+    this.radius = this.radius.bind(this)
+    this.getDistance = this.getDistance.bind(this)
   }
 
   componentDidMount(){
@@ -96,7 +98,10 @@ class Dashboard extends Component {
       otherUsers.map((value)=>{
 
       for (let i in value.userInfo){
+
       var selectedFlag = false;
+      var radiusFlag = false;
+
       value.userInfo[i].meetingDuration.map((value2)=>{
         if(currentUser.meetingDuration.includes(value2))
         {selectedFlag = true}
@@ -106,8 +111,12 @@ class Dashboard extends Component {
         if(currentUser.beverages.includes(value2))
         {selectedFlag = true}
       })
+
+      if(this.getDistance(currentUser.latitude,currentUser.longitude,value.userInfo[i].latitude,value.userInfo[i].longitude,) > 5000){
+        radiusFlag = true
+      }
       
-      if(selectedFlag === true){
+      if(selectedFlag === true && radiusFlag == true){
         selectedUsers.push(value.userInfo[i])
         this.setState(selectedUsers)
       }
@@ -122,6 +131,22 @@ class Dashboard extends Component {
 
     //Setting Other Users In State
 
+  }
+
+  radius(x){
+    return x * Math.PI / 180;
+  }
+
+  getDistance(latC, lngC, latO, lngO){
+    const R = 6378137; // Earth’s mean radius in meter
+    const dLat = this.radius(latO - latC);
+    const dLong = this.radius(lngO - lngC);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(this.radius(latC)) * Math.cos(this.radius(latO)) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c;
+    return d; // returns the distance in meter};
   }
 
   dismiss(){
