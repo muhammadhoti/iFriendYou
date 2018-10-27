@@ -28,8 +28,8 @@ class ProfileScreen extends Component {
         beverages: [],
         meetingDuration : [],
         location : [],
-        latitude :`24.8607`,
-        longitude:`67.0011`,
+        latitude :24.862736834972253,
+        longitude:67.02094346140439,
     }
     this.inputBox=this.inputBox.bind(this)
     this.uploadPictures=this.uploadPictures.bind(this)
@@ -149,7 +149,7 @@ class ProfileScreen extends Component {
 
   setPosition(){
     navigator.geolocation.getCurrentPosition((position)=>{
-      this.setState({latitude : position.coords.latitude,longitude : position.coords.longitude})
+      position.coords.latitude && this.setState({latitude : position.coords.latitude,longitude : position.coords.longitude})
       })
   }
 
