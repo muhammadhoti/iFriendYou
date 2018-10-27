@@ -269,7 +269,10 @@ class Dashboard extends Component {
     meetings.set(
        {
         sender : uid,
-        receiver : meetingDetails.meetingWith.uid
+        receiver : meetingDetails.meetingWith.uid,
+        date : meetingDetails.meetingDate,
+        time : meetingDetails.meetingTime,
+        venue : meetingDetails.meetingVenue,
       }
      )
        
