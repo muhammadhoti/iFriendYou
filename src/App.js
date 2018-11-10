@@ -3,6 +3,9 @@ import './App.css';
 import Homepage from './Components/Homepage/Homepage'
 import { Layout } from 'antd';
 import { Row, Col } from 'antd';
+import { store, persistor } from './Redux/store'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 import ProfileScreen from './Components/Profile Screen/ProfileScreen'
@@ -52,11 +55,13 @@ class App extends Component {
 
     const { Header, Footer, Content } = Layout;
     
-    const bgColor = "#85144b"
+    const bgColor = "#100c08"
 
     const {showHomepage,showProfileScreen,uid,displayName,displayPicture,email,showDashboard} = this.state;
 
     return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor = {persistor}>
       <div>
         <Layout style={{backgroundColor:bgColor}}>
           <Row> 
@@ -110,6 +115,8 @@ class App extends Component {
           </Row>
         </Layout>
       </div>
+    </PersistGate>
+    </Provider>
     );
   }
 }

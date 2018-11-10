@@ -3,19 +3,18 @@
 
 import React, { Component } from 'react';
 import './Dashboard.css';
+import firebase from '../../Config/Config'
+import _ from 'lodash';
 import Cards, { Card } from 'react-swipe-deck'
 import swal from 'sweetalert';
-import { Carousel } from 'antd';
-import { Radio } from 'antd';
-import { Calendar} from 'antd';
 import moment from 'moment';
-import { TimePicker } from 'antd';
-import firebase from '../../Config/Config'
-import { Modal, Button } from 'antd'
 import { withGoogleMap, GoogleMap, Marker, DirectionsRenderer, withScriptjs } from "react-google-maps"
+import { Carousel, Radio, Calendar, TimePicker, Modal, Avatar, Card as ReqCard } from 'antd';
+import { connect } from 'react-redux'
 
 const RadioGroup = Radio.Group;
 const format = 'HH:mm';
+const { Meta } = ReqCard;
 
 
 class Dashboard extends Component {
@@ -27,6 +26,7 @@ class Dashboard extends Component {
         meetingButton : true,
         card : false,
         meetingPoint : false,
+        meetingStatus : false,
         currentUser : {},
         otherUsers : [],
         selectedUsers : [],
@@ -34,6 +34,8 @@ class Dashboard extends Component {
         radioButtonValue: 0,
         navigation : {},
         visible: false,
+        meetings:[],
+        currentUserMeetings:[],
     }
     this.radius = this.radius.bind(this)
     this.getDistance = this.getDistance.bind(this)
@@ -42,7 +44,7 @@ class Dashboard extends Component {
 
   componentDidMount(){
     
-    const {uid,currentUser,otherUsers,selectedUsers,venues} = this.state;
+    const {uid,currentUser,otherUsers,selectedUsers,venues,meetings,currentUserMeetings} = this.state;
 
     //Setting Current User In State
       
@@ -140,6 +142,30 @@ class Dashboard extends Component {
         })
 
     //Setting Other Users In State
+
+    //Getting Meetings Status And Request 
+
+    fetch('https://i-friend-you.firebaseio.com/meetings.json')
+    .then(response => response.json())
+    .then((data) => { 
+      for (let i in data){
+        meetings.push(data[i])
+      }
+    }).then(
+      ()=>{
+        meetings.map(
+          (value,index)=>{
+            value.sender === uid && currentUserMeetings.push(value)
+          }
+          )
+      }
+    ).then(
+      () => {
+        currentUserMeetings.length > 0 && this.setState({meetingStatus : 'true'})
+      }
+    )
+
+    //Getting Meetings Status And Request 
 
   }
 
@@ -273,6 +299,7 @@ class Dashboard extends Component {
         date : meetingDetails.meetingDate,
         time : meetingDetails.meetingTime,
         venue : meetingDetails.meetingVenue,
+        status : "pending"
       }
      )
        
@@ -288,7 +315,7 @@ class Dashboard extends Component {
 
   render() {
     
-    const {meetingButton,card,selectedUsers,meetingPoint,venues,meetingDetails,calendarValue,selectedValue,currentUser,navigation,directions,radioButtonValue} = this.state;
+    const {meetingButton,card,selectedUsers,meetingPoint,venues,meetingDetails,currentUser,navigation,directions,radioButtonValue,meetingStatus,currentUserMeetings} = this.state;
     
     const radioStyle = {
       display: 'block',
@@ -296,14 +323,58 @@ class Dashboard extends Component {
       lineHeight: '30px',
     };
 
+
     return (
       
       <div>
-        {meetingButton && !card && !meetingPoint &&
+        {meetingButton && !card && !meetingPoint && 
         <div>
-        
-        <div><h1 style={{color:"antiquewhite",fontFamily:'Times New Roman',margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1></div>
-        <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
+        {!meetingStatus &&
+        <div>
+          <h1 style={{color:"antiquewhite",fontFamily:'Times New Roman',margin:"60px"}}>You have not done any meeting yet!”, try creating a new meeting!</h1>
+          <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
+        </div>
+        }
+        {meetingStatus &&
+          <div>
+            <a href="#" style={{color:"black"}} onClick={()=>{this.setState({meetingButton : false,card:true})}} className="myButton">Set A Meeting !</a>
+            <br></br>
+            <br></br>
+            <a href="#" style={{color:"black"}} onClick={this.showModal} className="myButton">See Meeitng Requests</a>}
+              <Modal
+                title="Meeting Requests"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+              >
+                
+              </Modal>
+            <h1 style={{color:"antiquewhite",fontFamily:'Times New Roman',margin:"20px"}}>Your Meetings Status</h1>
+            {
+               currentUserMeetings.map((value,index)=>{
+                 const receiver = _.find(selectedUsers,{uid:value.receiver})
+                 
+                 return( 
+                  <ReqCard style={{ width: 300, marginTop: 16 }} >
+                    <Meta
+                      avatar={receiver && <Avatar src={receiver.displayPicture} />}
+                      title={receiver && receiver.displayName}
+                      description={receiver && `${value.venue.name} - ${value.date}  ${value.time}`}
+                    />
+                    <h1>{value.status.toUpperCase()}</h1>
+                  </ReqCard>
+                  //   <div class="card">
+                  //   <img src={receiver && receiver.displayPicture} alt="John" style={{width:"50%"}}/>
+                  //   <h1>{receiver && receiver.displayName}</h1>
+                  //   <p class="title">CEO & Founder, Example</p>
+                  //   <p>Harvard University</p>
+                  //   <p><button>Contact</button></p>
+                  // </div>
+               )
+               }) 
+            }
+          </div>
+        }
         </div>
         }
         {card && !meetingButton && !meetingPoint &&
@@ -340,7 +411,7 @@ class Dashboard extends Component {
           </Cards>
         </div>
         }
-        {meetingPoint && !meetingButton && !card &&
+        {meetingPoint && !meetingButton && !card && 
           <div>
             <h1 style={{color:"yellowgreen",fontFamily:"Time New Roman"}}>Select Your Meeting Venue </h1>
             <RadioGroup onChange={(e)=>{this.radioButtonValue(e)}} value={this.state.radioButtonValue}>
@@ -404,4 +475,16 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   </GoogleMap>
 ))
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  
+  return {
+    user: state
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);

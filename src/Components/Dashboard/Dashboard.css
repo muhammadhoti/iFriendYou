@@ -66,3 +66,11 @@
 .radio-btn-value{
 	color: antiquewhite !important;
 }
+.ant-card{
+	width: 250px !important;
+	height: 175px !important;
+	position: relative !important;
+	/* margin-bottom: 16px !important; */
+	margin: 16px auto 16px auto !important;
+	left: 10px !important;
+}

@@ -4,7 +4,9 @@ import logo from '../../Assets/Images/Homepage/logo.png'
 import tagLine from '../../Assets/Images/Homepage/tagLine.png'
 import firebase from '../../Config/Config'
 import { database } from 'firebase';
-
+import { updateUser } from '../../Redux/actions/authActions'
+import { connect } from 'react-redux'
+ 
 class Homepage extends Component {
 
   constructor(props){
@@ -48,11 +50,14 @@ class Homepage extends Component {
 
     const {changeScreen,changeScreen2} =this.props;
     if(usersList.includes(uid)){
+    const user={uid,displayName,displayPicture,email}
+    this.props.updateUser(user)
     changeScreen2(uid)
     localStorage.setItem("uid",uid)
   }else{
     // this.sendData(email,displayName,displayPicture,uid)
-    
+    const user={uid,displayName,displayPicture,email}
+    this.props.updateUser(user)
     changeScreen(uid,displayName,displayPicture,email)
   }
 
@@ -71,7 +76,8 @@ class Homepage extends Component {
         displayName : user.displayName,
         displayPicture : user.photoURL ,
         email : user.email,
-      })       
+      })
+      
       // ...
     }).catch(function(error) {
       // Handle Errors here.
@@ -87,8 +93,6 @@ class Homepage extends Component {
   }
 
   render() {
-    
-    
 
     return (
 
@@ -109,4 +113,16 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    updateUser : (user) => dispatch(updateUser(user)) 
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Homepage);
