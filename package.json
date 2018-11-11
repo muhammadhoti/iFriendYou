@@ -10,6 +10,7 @@
     "gh-pages": "^2.0.1",
     "moment": "^2.22.2",
     "react": "^16.5.2",
+    "react-add-to-calendar": "^0.1.5",
     "react-carousel-slider": "^2.0.13",
     "react-dom": "^16.5.2",
     "react-google-maps": "^9.4.5",
