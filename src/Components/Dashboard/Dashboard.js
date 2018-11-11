@@ -410,14 +410,17 @@ class Dashboard extends Component {
 
   accept(key){
     const database = firebase.database();
-    database.ref(`meetings/${key}`).update({ status: "accepted" });
-    window.location.reload();
+    database.ref(`meetings/${key}`).update({ status: "accepted" }).then(
+      setTimeout(()=>{window.location.reload()},1500)
+    )
   }
 
   reject(key){
     const database = firebase.database();
-    database.ref(`meetings/${key}`).set({});
-    window.location.reload();
+    database.ref(`meetings/${key}`).set({}).then(
+      setTimeout(()=>{window.location.reload()},1500)
+    )
+    
   }
 
   render() {
