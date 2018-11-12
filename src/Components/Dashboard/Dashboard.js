@@ -626,6 +626,19 @@ class Dashboard extends Component {
                         }
                       />
                       <h4>Status : {value.status.toUpperCase()}</h4>
+                      {
+                        sender && value.status === "accepted" &&
+                        <AddToCalendar 
+                        event={
+                        {
+                        title: `I Friend You's Meeting`,
+                        description: `Meeting With ${sender.displayName} On ${value.date} At ${value.time} For ${sender.meetingDuration[0]}`,
+                        location: value.venue.name,
+                        }
+                        }  
+                        listItems={items}
+                        />
+                      }
                     </ReqCard>
                     //   <div class="card">
                     //   <img src={receiver && receiver.displayPicture} alt="John" style={{width:"50%"}}/>
@@ -641,12 +654,9 @@ class Dashboard extends Component {
                 }
                 {
                   currentUserAcceptedMeetings.map((value,index)=>{
-                    console.log(value)
                     const receiver = _.find(selectedUsers, {
                       uid: value.sender
                     });
-                    console.log(receiver)
-                    console.log(value.sender)
                     
                     return (
                       <ReqCard style={{ width: 300, marginTop: 16 }}>
