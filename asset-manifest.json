@@ -1,10 +1,10 @@
 {
   "main.css": "/iFriendYou/static/css/main.cfe784c7.chunk.css",
-  "main.js": "/iFriendYou/static/js/main.09f166ee.chunk.js",
-  "main.js.map": "/iFriendYou/static/js/main.09f166ee.chunk.js.map",
+  "main.js": "/iFriendYou/static/js/main.ca4d14ae.chunk.js",
+  "main.js.map": "/iFriendYou/static/js/main.ca4d14ae.chunk.js.map",
   "static/css/1.3f27a77d.chunk.css": "/iFriendYou/static/css/1.3f27a77d.chunk.css",
-  "static/js/1.62a6edac.chunk.js": "/iFriendYou/static/js/1.62a6edac.chunk.js",
-  "static/js/1.62a6edac.chunk.js.map": "/iFriendYou/static/js/1.62a6edac.chunk.js.map",
+  "static/js/1.aed56da7.chunk.js": "/iFriendYou/static/js/1.aed56da7.chunk.js",
+  "static/js/1.aed56da7.chunk.js.map": "/iFriendYou/static/js/1.aed56da7.chunk.js.map",
   "runtime~main.js": "/iFriendYou/static/js/runtime~main.b2545654.js",
   "runtime~main.js.map": "/iFriendYou/static/js/runtime~main.b2545654.js.map",
   "static/media/logo.png": "/iFriendYou/static/media/logo.e742beba.png",
@@ -12,9 +12,9 @@
   "static/media/Juice.png": "/iFriendYou/static/media/Juice.ef24b71a.png",
   "static/media/Cocktail.png": "/iFriendYou/static/media/Cocktail.1b07e77a.png",
   "static/media/tagLine.png": "/iFriendYou/static/media/tagLine.3851b0ce.png",
-  "static/css/1.3f27a77d.chunk.css.map": "/iFriendYou/static/css/1.3f27a77d.chunk.css.map",
   "static/css/main.cfe784c7.chunk.css.map": "/iFriendYou/static/css/main.cfe784c7.chunk.css.map",
+  "static/css/1.3f27a77d.chunk.css.map": "/iFriendYou/static/css/1.3f27a77d.chunk.css.map",
   "index.html": "/iFriendYou/index.html",
-  "precache-manifest.ab5abed2dc23ae2574a43e026508a27e.js": "/iFriendYou/precache-manifest.ab5abed2dc23ae2574a43e026508a27e.js",
+  "precache-manifest.9c73f4c6198fa6103661bc296293bc33.js": "/iFriendYou/precache-manifest.9c73f4c6198fa6103661bc296293bc33.js",
   "service-worker.js": "/iFriendYou/service-worker.js"
 }
