@@ -53,6 +53,8 @@ class Dashboard extends Component {
       currentUserMeetings: [],
       currentUserMeetingsRequests: [],
       currentUserAcceptedMeetings:[],
+      meetingRequest: false,
+      meetingAccepted: false,
     };
     this.radius = this.radius.bind(this);
     this.getDistance = this.getDistance.bind(this);
@@ -69,7 +71,7 @@ class Dashboard extends Component {
       meetings,
       currentUserMeetings,
       currentUserMeetingsRequests,
-      currentUserAcceptedMeetings
+      currentUserAcceptedMeetings,
     } = this.state;
 
     //Setting Current User In State
@@ -190,6 +192,7 @@ class Dashboard extends Component {
       .then(() => {
         meetings.map((value, index) => {
           value.sender === uid && currentUserMeetings.push(value);
+          value.receiver === uid && value.status === 'accepted' && this.setState({meetingAccepted: true})
         });
       })
       .then(() => {
@@ -203,12 +206,17 @@ class Dashboard extends Component {
 
       .then(() => {
         meetings.map((value, index) => {
-          value.receiver === uid &&
-            value.status === "pending" &&
-            currentUserMeetingsRequests.push(value);
-            value.receiver === uid &&
-            value.status === "accepted" &&
-            currentUserAcceptedMeetings.push(value);
+          if (value.receiver === uid && value.status === "pending" )
+            {
+              currentUserMeetingsRequests.push(value);
+              this.setState({meetingRequest: true,meetingStatus :true})
+            }
+            if(
+              value.receiver === uid && value.status === "accepted"
+            ){
+              currentUserAcceptedMeetings.push(value);
+              this.setState({meetingAccepted: true,meetingStatus :true})
+            }
         });
       });
 
@@ -439,6 +447,8 @@ class Dashboard extends Component {
       currentUserMeetings,
       currentUserMeetingsRequests,
       currentUserAcceptedMeetings,
+      meetingRequest,
+      meetingAccepted
     } = this.state;
 
     const radioStyle = {
@@ -454,9 +464,10 @@ class Dashboard extends Component {
 
     return (
       <div>
+        
         {meetingButton && !card && !meetingPoint && (
           <div>
-            {!meetingStatus && (
+            {!meetingStatus && !meetingAccepted && !meetingRequest &&(
               <div>
                 <h1
                   style={{
@@ -480,7 +491,7 @@ class Dashboard extends Component {
                 </a>
               </div>
             )}
-            {meetingStatus && (
+            {meetingStatus &&(
               <div>
                 <a
                   href="#"
@@ -666,6 +677,8 @@ class Dashboard extends Component {
                 }
               </div>
             )}
+            }
+            }
           </div>
         )}
         {card && !meetingButton && !meetingPoint && (
