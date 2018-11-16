@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/iFriendYou/static/css/1.c0ac3966.chunk.css"
   },
   {
-    "revision": "188896f7eb013f98034637ecdbae2cbe",
+    "revision": "09718627a461ab3260e36fd744c785ab",
     "url": "/iFriendYou/index.html"
   }
 ];
