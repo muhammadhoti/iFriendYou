@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-import Homepage from './Components/Homepage/Homepage'
-import { Layout } from 'antd';
-import { Row, Col } from 'antd';
+import { Layout, Row, Col, Icon } from 'antd';
 import { store, persistor } from './Redux/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { BrowserRouter as Router, Route,  Switch, } from "react-router-dom";
 
-
+import Homepage from './Components/Homepage/Homepage'
 import ProfileScreen from './Components/Profile Screen/ProfileScreen'
-
 import Dashboard from './Components/Dashboard/Dashboard'
+import EditProfile from './Components/Edit Profile/EditProfile'
 
 class App extends Component {
 
@@ -20,9 +19,11 @@ class App extends Component {
       showHomepage : true,
       showProfileScreen : false,
       showDashboard : false,
+      showEditProfile : false,
     }
     this.goToProfileScreen=this.goToProfileScreen.bind(this)
     this.goToDashboard=this.goToDashboard.bind(this)
+    this.goToEditProfile=this.goToEditProfile.bind(this)
   }
 
   componentDidMount(){
@@ -46,8 +47,18 @@ class App extends Component {
     this.setState({
       showHomepage : false,
       showProfileScreen : false,
+      showEditProfile : false,
       showDashboard : true,
       uid:id,
+    })
+  }
+
+  goToEditProfile(){
+    this.setState({
+      showHomepage : false,
+      showProfileScreen : false,
+      showDashboard : false,
+      showEditProfile : true,
     })
   }
 
@@ -57,7 +68,7 @@ class App extends Component {
     
     const bgColor = "#100c08"
 
-    const {showHomepage,showProfileScreen,uid,displayName,displayPicture,email,showDashboard} = this.state;
+    const {showHomepage,showProfileScreen,uid,displayName,displayPicture,email,showDashboard,showEditProfile} = this.state;
 
     return (
       <Provider store={store}>
@@ -73,27 +84,41 @@ class App extends Component {
             </Col>
           </Row>
           <Row>
-            <hr></hr>         
+            <hr style={{height:"1px"}}></hr>         
             <Content>
               <div className="heightSetting">
-              {showHomepage && !showProfileScreen && !showDashboard &&
+              {showHomepage && !showProfileScreen && !showDashboard && !showEditProfile &&
                 <Col span={24}>
                   <div className="Homepage">
                     <Homepage changeScreen={this.goToProfileScreen} changeScreen2={this.goToDashboard} />
                   </div>
                 </Col>
               }
-              {showProfileScreen && !showHomepage && !showDashboard &&
+              {showProfileScreen && !showHomepage && !showDashboard && !showEditProfile &&
                 <Col span={24}>
                   <div className="ProfileScreen">
                     <ProfileScreen uid={uid} email={email} displayName={displayName} displayPicture={displayPicture} changeScreen={this.goToDashboard}/> 
                   </div>
                 </Col>
               }
-              {showDashboard && !showHomepage && !showProfileScreen && 
+              {showDashboard && !showHomepage && !showProfileScreen && !showEditProfile &&
                 <Col span={24}>
                   <div className="dashboard">
-                    <Dashboard uid={uid}/> 
+                    {/* <Router>
+                        <div>
+                          <Switch>
+                            <Route path="/editProfile" component={EditProfile} exact/>
+                          </Switch>
+                        </div>  
+                    </Router>  */}
+                    <Dashboard uid={uid} changeScreen={this.goToEditProfile}/> 
+                  </div>
+                </Col>
+              }
+              {showEditProfile && !showDashboard && !showHomepage && !showProfileScreen && 
+                <Col span={24}>
+                  <div className="dashboard">
+                    <EditProfile uid={uid} changeScreen={this.goToDashboard}/> 
                   </div>
                 </Col>
               }
@@ -102,7 +127,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col span={24}>
-              <hr></hr>              
+            <hr style={{height:"1px"}}></hr>                   
               <Footer style={{backgroundColor:bgColor,margin:"-5px"}}>
                 <address style={{color:'yellow',fontFamily:'Times New Roman',textAlign:'center'}}>
                           HayFa Tech<sup>©</sup><br></br>
@@ -122,3 +147,4 @@ class App extends Component {
 }
 
 export default App;
+

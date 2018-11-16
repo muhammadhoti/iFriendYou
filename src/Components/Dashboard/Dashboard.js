@@ -8,6 +8,7 @@ import _ from "lodash";
 import Cards, { Card } from "react-swipe-deck";
 import swal from "sweetalert";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
 import {
   withGoogleMap,
   GoogleMap,
@@ -16,6 +17,7 @@ import {
   withScriptjs
 } from "react-google-maps";
 import {
+  Icon,
   Carousel,
   Radio,
   Calendar,
@@ -464,9 +466,19 @@ class Dashboard extends Component {
 
     return (
       <div>
-        
+        {/* <NavLink to="/editProfile" exact><Icon type="edit" /></NavLink> */}
         {meetingButton && !card && !meetingPoint && (
           <div>
+              {/* <a
+                href="#"
+                style={{ color: "black", margin : '16px' }}
+                onClick={() => {
+                this.props.changeScreen()
+                }}
+                className="myButton"
+              >
+              Edit Profile
+              </a> */}
             {!meetingStatus && !meetingAccepted && !meetingRequest &&(
               <div>
                 <h1
