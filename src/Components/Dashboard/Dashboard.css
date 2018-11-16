@@ -48,7 +48,7 @@
 	min-height: 50px;
 	width: 135px;
 	line-height: 100px;
-	background: #84596B;
+	background: #0c596b;
 	overflow: hidden;
   }
   .slick-dots{
@@ -163,4 +163,27 @@ body {
 	background-color: #7F00FF !important;
 	border-color: #7F00FF !important;
 	color: white !important ;
+}
+
+.ant-card{
+	background: #0c596b !important
+}
+
+.ant-card-meta-description {
+	color: #ffffff !important
+}
+
+.ant-card-meta-title {
+	color: #97dcd6fa !important
+}
+
+.edit {
+	color: #97dcd6fa !important;
+	margin: 5px;
+	text-align: center
+	
+}
+
+.react-add-to-calendar__button{
+	color : #ffee18 !important
 }

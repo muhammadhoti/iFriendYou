@@ -28,8 +28,8 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import AddToCalendar from 'react-add-to-calendar';
-
-
+import NotificationBadge from 'react-notification-badge';
+import {Effect} from 'react-notification-badge';
 const RadioGroup = Radio.Group;
 const format = "HH:mm";
 const { Meta } = ReqCard;
@@ -521,14 +521,18 @@ class Dashboard extends Component {
                 </a>
                 <br />
                 <br />
+                <div>
                 <a
                   href="#"
                   style={{ color: "black" }}
                   onClick={this.showModal}
                   className="myButton"
                 >
-                  See Meeitng Requests
+                    <NotificationBadge count={currentUserMeetingsRequests.length} effect={Effect.ROTATE_X}/>
+                    Meeitng Requests
                 </a>
+                
+                </div>
                 }
                 <Modal
                   title="Meeting Requests"
@@ -644,7 +648,7 @@ class Dashboard extends Component {
                           `${value.venue.name} - ${value.date}  ${value.time}`
                         }
                       />
-                      <h4>Status : {value.status.toUpperCase()}</h4>
+                      <h4 className="edit">Status : {value.status.toUpperCase()}</h4>
                       {
                         sender && value.status === "accepted" &&
                         <AddToCalendar 
@@ -689,7 +693,7 @@ class Dashboard extends Component {
                             `${value.venue.name} - ${value.date}  ${value.time}`
                           }
                         />
-                        <h4>Status : {value.status.toUpperCase()}</h4>
+                        <h4 className="edit">Status : {value.status.toUpperCase()}</h4>
                         {receiver && <AddToCalendar 
                         event={
                         {
@@ -712,7 +716,7 @@ class Dashboard extends Component {
         )}
         {card && !meetingButton && !meetingPoint && (
           <div>
-            <h1 style={{ color: "antiquewhite", fontFamily: "Time New Roman" }}>
+            <h1 style={{ color: "antiquewhite", fontFamily: "Time New Roman", fontSize : "30px"}}>
               People Near You Around 5 KM Radius And Have Similarities With You
             </h1>
             <p style={{ color: "antiquewhite", fontFamily: "Time New Roman" }}>
@@ -731,7 +735,7 @@ class Dashboard extends Component {
                   <div className="w3-container" style={{ width: "100%" }}>
                     <div
                       className="w3-card-4 "
-                      style={{ minHeight: 250, backgroundColor: "#84596B" }}
+                      style={{ minHeight: 250, backgroundColor: "rgb(13, 89, 107)" }}
                     >
                       <div className="w3-container w3-center">
                         <h3 style={{ fontSize: "20px" }}>
