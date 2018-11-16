@@ -410,9 +410,12 @@ class Dashboard extends Component {
         time: meetingDetails.meetingTime,
         venue: meetingDetails.meetingVenue,
         status: "pending"
-      });
+      }).then(
+        
+        setTimeout(()=>{window.location.reload()},1500)
+      )
+      // this.setState({ meetingButton: true, card: false, meetingPoint: false });
 
-      this.setState({ meetingButton: true, card: false, meetingPoint: false });
     } else {
       swal("Access Denied", "Please Select The Required Details");
     }
@@ -469,7 +472,7 @@ class Dashboard extends Component {
         {/* <NavLink to="/editProfile" exact><Icon type="edit" /></NavLink> */}
         {meetingButton && !card && !meetingPoint && (
           <div>
-              {/* <a
+              <a
                 href="#"
                 style={{ color: "black", margin : '16px' }}
                 onClick={() => {
@@ -478,14 +481,15 @@ class Dashboard extends Component {
                 className="myButton"
               >
               Edit Profile
-              </a> */}
+              </a> 
             {!meetingStatus && !meetingAccepted && !meetingRequest &&(
               <div>
                 <h1
                   style={{
                     color: "antiquewhite",
                     fontFamily: "Times New Roman",
-                    margin: "60px"
+                    margin: "60px",
+                    fontSize : "50px"
                   }}
                 >
                   You have not done any meeting yet!”, try creating a new
@@ -532,6 +536,7 @@ class Dashboard extends Component {
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                 >
+                  {currentUserMeetingsRequests.length === 0 && <h1>You Don't Have Any Request Right Now</h1>}
                   {currentUserMeetingsRequests.map((value, index) => {
                     const sender = _.find(selectedUsers, {
                       uid: value.sender
@@ -595,6 +600,7 @@ class Dashboard extends Component {
                             >
                             Get Directions
                             </a>  
+                            
                             </div>
                           </Modal>
                           </div>
@@ -615,7 +621,8 @@ class Dashboard extends Component {
                   style={{
                     color: "antiquewhite",
                     fontFamily: "Times New Roman",
-                    margin: "20px"
+                    margin: "20px",
+                    fontSize : "50px"
                   }}
                 >
                   Your Meetings Status
