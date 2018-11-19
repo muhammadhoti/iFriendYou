@@ -1,7 +1,7 @@
 {
-  "main.css": "/iFriendYou/static/css/main.4686222f.chunk.css",
-  "main.js": "/iFriendYou/static/js/main.4bd97c8c.chunk.js",
-  "main.js.map": "/iFriendYou/static/js/main.4bd97c8c.chunk.js.map",
+  "main.css": "/iFriendYou/static/css/main.c62e00fd.chunk.css",
+  "main.js": "/iFriendYou/static/js/main.1179f758.chunk.js",
+  "main.js.map": "/iFriendYou/static/js/main.1179f758.chunk.js.map",
   "static/css/1.c0ac3966.chunk.css": "/iFriendYou/static/css/1.c0ac3966.chunk.css",
   "static/js/1.ac5051ea.chunk.js": "/iFriendYou/static/js/1.ac5051ea.chunk.js",
   "static/js/1.ac5051ea.chunk.js.map": "/iFriendYou/static/js/1.ac5051ea.chunk.js.map",
@@ -12,9 +12,9 @@
   "static/media/logo.png": "/iFriendYou/static/media/logo.e742beba.png",
   "static/media/tagLine.png": "/iFriendYou/static/media/tagLine.3851b0ce.png",
   "static/media/Juice.png": "/iFriendYou/static/media/Juice.ef24b71a.png",
-  "static/css/main.4686222f.chunk.css.map": "/iFriendYou/static/css/main.4686222f.chunk.css.map",
+  "static/css/main.c62e00fd.chunk.css.map": "/iFriendYou/static/css/main.c62e00fd.chunk.css.map",
   "static/css/1.c0ac3966.chunk.css.map": "/iFriendYou/static/css/1.c0ac3966.chunk.css.map",
   "index.html": "/iFriendYou/index.html",
-  "precache-manifest.9b9deee8656e41fe157aca891605c9b0.js": "/iFriendYou/precache-manifest.9b9deee8656e41fe157aca891605c9b0.js",
+  "precache-manifest.5d0b2f0119a3d4b0d57d3e0879c66ba0.js": "/iFriendYou/precache-manifest.5d0b2f0119a3d4b0d57d3e0879c66ba0.js",
   "service-worker.js": "/iFriendYou/service-worker.js"
 }
