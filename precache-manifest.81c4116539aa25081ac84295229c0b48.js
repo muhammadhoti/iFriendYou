@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/iFriendYou/static/media/Coffee.a8d11b6c.png"
   },
   {
-    "revision": "1179f7586f6ebefd2b26",
-    "url": "/iFriendYou/static/css/main.c62e00fd.chunk.css"
+    "revision": "d10c9e1c38046c33e2e2",
+    "url": "/iFriendYou/static/css/main.af06c673.chunk.css"
   },
   {
     "revision": "3851b0cebede8dc259de78f3ceec5d64",
@@ -20,8 +20,8 @@ self.__precacheManifest = [
     "url": "/iFriendYou/static/js/runtime~main.b2545654.js"
   },
   {
-    "revision": "1179f7586f6ebefd2b26",
-    "url": "/iFriendYou/static/js/main.1179f758.chunk.js"
+    "revision": "d10c9e1c38046c33e2e2",
+    "url": "/iFriendYou/static/js/main.d10c9e1c.chunk.js"
   },
   {
     "revision": "ef24b71ac5f3d5d99e2b52fbe7f536ea",
@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/iFriendYou/static/css/1.c0ac3966.chunk.css"
   },
   {
-    "revision": "c6fb340355306f5c5835a4a22431481b",
+    "revision": "8d88ead5b0f5b1d2c0112941fc918d95",
     "url": "/iFriendYou/index.html"
   }
 ];
