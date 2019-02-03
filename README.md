@@ -1,5 +1,4 @@
 Functionality :
-
 Authentication On Sign Up And Sign In From Facebook
 Select Your Interests
 Select Meeting Duration 
